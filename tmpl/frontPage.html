@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Wiki Front page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+
+</head>
+
+<body>
+  <h1>This is a wiki site made with the Go language</h1>
+  <main>
+    <h3>Click on the following links to read a wiki on those topics</h3>
+    <ul>
+      {{range $key, $value := .}}
+      <a href="/view/{{$key}}">{{$key}}</a><br> 
+      {{end}}
+    </ul>
+    <h3>Or write a new wiki ...</h3>
+    <label for="titleInput">Title for the wiki</label>
+    <input id="titleInput" type="text">
+    <button id="createWiki" onclick="goToEditPage()">Create wiki.</button>
+  </main>
+  <script>
+    const titleInputEle = document.getElementById("titleInput")
+    function goToEditPage() {
+      const editPageURL = `/edit/${titleInputEle.value}`
+      window.location.href = editPageURL
+    }
+  </script>
+</body>
+
+</html>
