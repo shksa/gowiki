@@ -6,11 +6,13 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
 
 // 18-1008815285
+const packageDir = "~/go/src/github.com/shksa/learninggowiki"
 
 // Page is a custom structure type that stores title and the body of a wiki.
 type Page struct {
@@ -26,12 +28,12 @@ type ViewTemplatePage struct {
 
 func (p *Page) save() error {
 	filename := p.Title + ".txt"
-	return ioutil.WriteFile("data/"+filename, p.Body, 0600)
+	return ioutil.WriteFile(filepath.Join(packageDir, "data", filename), p.Body, 0600)
 }
 
 func load(title string) (*Page, error) {
 	filename := title + ".txt"
-	body, err := ioutil.ReadFile("data/" + filename)
+	body, err := ioutil.ReadFile(filepath.Join(packageDir, "data", filename))
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +61,11 @@ and parses those files into templates that are named after the base file name.
 6. So the template name is the template file name.
 */
 
-var templates = template.Must(template.ParseFiles("tmpl/edit.html", "tmpl/view.html", "tmpl/frontPage.html"))
+var templates = template.Must(template.ParseFiles(
+	filepath.Join(packageDir, "tmpl", "edit.html"),
+	filepath.Join(packageDir, "tmpl", "view.html"),
+	filepath.Join(packageDir, "tmpl", "frontPage.html"),
+))
 
 func renderTemplate(w http.ResponseWriter, templateFilename string, data interface{}) {
 	err := templates.ExecuteTemplate(w, templateFilename, data)
@@ -170,9 +176,9 @@ func updateWikiTitleList(title string) {
 }
 
 func init() {
-	files, err := ioutil.ReadDir("data")
+	files, err := ioutil.ReadDir(filepath.Join(packageDir, "data"))
 	if err != nil {
-		log.Fatal("could not read files from the /data/ directory due to error:\n" + err.Error())
+		log.Fatal("could not read files from the ~/go/src/github.com/shksa/gowiki/data directory due to error:\n" + err.Error())
 	}
 	for _, file := range files {
 		title := strings.Split(file.Name(), ".")[0] // bcoz ".txt" should not be included in the title
