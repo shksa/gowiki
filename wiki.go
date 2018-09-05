@@ -12,7 +12,7 @@ import (
 )
 
 // This path has to be absolute without aliases like ~ and others.
-const packageDir = "/Users/sreekarnimbalkar/go/src/github.com/shksa/gowiki"
+var packageDir = filepath.Dir("")
 
 // Page is a custom structure type that stores title and the body of a wiki.
 type Page struct {
