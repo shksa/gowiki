@@ -1,4 +1,4 @@
-package main
+package matrixRoute
 
 import (
 	"fmt"
@@ -91,7 +91,7 @@ func canMultiply(matAsize, matBsize [2]int) (bool, string) {
 }
 
 // MatrixHandler returns the home page with the requested computation
-func matrixHandler(writer http.ResponseWriter, request *http.Request) {
+func MatrixHandler(writer http.ResponseWriter, request *http.Request) {
 	err := request.ParseForm() // Must be called before writing response
 	fmt.Fprint(writer, pageTop, form)
 	if err != nil {

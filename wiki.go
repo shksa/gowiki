@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"github.com/shksa/gowiki/matrixRoute"
 )
 
 // This path has to be absolute without aliases like ~ and others.
@@ -203,6 +205,6 @@ func main() {
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
-	http.HandleFunc("/mm", matrixHandler)
+	http.HandleFunc("/mm", matrixRoute.MatrixHandler)
 	log.Fatal(http.ListenAndServe(":80", nil))
 }
