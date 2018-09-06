@@ -12,7 +12,7 @@ import (
 )
 
 // This path has to be absolute without aliases like ~ and others.
-var packageDir = "/home/sreekarnimbalkar/go/src/github.com/shksa/gowiki"
+var packageDir = filepath.Dir("")
 
 // Page is a custom structure type that stores title and the body of a wiki.
 type Page struct {
@@ -203,5 +203,6 @@ func main() {
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	http.HandleFunc("/mm", matrixHandler)
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
